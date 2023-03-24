@@ -1,0 +1,17 @@
+ * Serving Flask app 'App' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://172.31.9.182:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 107-677-529
+89.19.67.17 - - [15/Apr/2022 12:29:23] "GET /map HTTP/1.1" 200 -
+89.19.67.17 - - [15/Apr/2022 12:29:27] "GET /bikes/King%20Street%20North HTTP/1.1" 200 -
+89.19.67.17 - - [15/Apr/2022 12:31:06] "GET /map HTTP/1.1" 200 -
+89.19.67.17 - - [15/Apr/2022 12:31:11] "GET /stationTable HTTP/1.1" 200 -
+89.19.67.17 - - [15/Apr/2022 12:31:13] "GET /about HTTP/1.1" 200 -
+89.19.67.17 - - [15/Apr/2022 12:31:18] "GET /map HTTP/1.1" 200 -

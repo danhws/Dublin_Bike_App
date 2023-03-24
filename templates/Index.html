@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0"> 
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <link href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Simple Map</title>
+    <!--- <link rel="stylesheet" href="style2.css"> --->
+    <!-- <link rel="stylesheet" href="style.css">  -->
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div 
+        * element that contains the map. */ 
+           /* Optional: Makes the sample page fill the window. */ 
+           html, body {  
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+            width:100%;
+            margin:auto;
+            height: 100%; 
+            font-family: Courier New; 
+         }  
+         
+         .header{
+                  
+                  display: flex;
+                  flex-direction: column;
+                  background-color:#FFC107;
+                  height: 20vh;
+                  clear: both;
+         }
+      
+         #main{
+      
+                  display: flex;
+                  width: 100%;
+                  height: 80vh;
+      
+         }
+
+         #map { 
+                  display: flex;
+                  flex-direction: column;
+                  width: 70%;
+                  float: right;
+
+          } 
+      
+      
+         #journeyplanner {
+
+                  text-align: center;
+                  align-items: center;
+                  float: left;
+                  width: 30%;
+                  overflow: auto;
+                  margin: 0;
+            
+
+          }
+      
+          #dropdown {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: left;
+                  justify-content: left;
+          }
+
+          label {
+
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto;
+          }
+          button {
+              display: inline-block;
+              padding: 8px;
+
+          }
+
+          #button {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+
+          }
+      
+         #charts {
+
+                  text-align: center;
+                  align-items: center;
+                  clear: both;
+                  overflow: auto;
+                  
+        }
+
+      
+        #model {
+
+                  display: flex;
+                  flex-direction: column;
+                  text-align: center;
+                  align-items: center;
+                  clear: both;
+                  overflow: auto;
+                  background-color:#FFC107;
+      
+        }
+      
+          .ct-label.ct-label.ct-horizontal.ct-end {
+                  position: relative;
+                  justify-content: flex-end;
+                  text-align: right;
+                  transform-origin: 100% 0;
+                  transform: translate(-100%) rotate(-45deg);
+                  white-space:nowrap;
+          }
+      
+      
+
+      
+          .nav a {
+                  float: left;
+                  color: #f2f2f2;
+                  text-align: center;
+                  padding: 14px 16px;
+                  text-decoration: none;
+                  font-size: 17px;
+          }
+      
+          .nav a:hover {
+                  background-color: #ddd;
+                  color: black;
+          }
+      
+          .nav a.active {
+                  background-color: #04AA6D;
+                  color: white;
+          }
+
+          .nav {
+                      overflow: hidden;
+                  background-color:#1E88E5;
+                  
+
+                  }
+      
+         
+      
+          .nav ul {
+              
+                  list-style: none;
+                  text-align: center;
+                  padding: 0;
+                  margin: 0;
+          }
+      
+          .nav li {
+                  display: inline-block;
+      
+          }
+      
+          .nav a:hover {
+                  background-color: #ddd;
+                  color: black;
+          }
+      
+      
+          h2 {    
+                  color: black;
+                  text-align: center;
+                  font-size: 20px;
+                  padding: 10px;
+          }
+      
+          h1 {
+                  text-align: center;
+                  font-size: 50px;
+                  padding: 10px;
+          }
+      
+          #content {
+                  position: relative;
+          }
+      
+          #content image {
+                  position: absolute;
+                  top: 0px;
+                  right: 0px;
+          }
+      
+          
+      
+          .topright2 {
+                  position: absolute;
+                  top: 8px;
+                  right: 16px;
+                  font-size: 18px;
+          }
+      
+          .topright3 {
+                  position: absolute;
+                  top: 27px;
+                  right: 16px;
+                  font-size: 18px;
+          }
+      
+          .topright4 {
+                  position: absolute;
+                  top: 40px;
+                  right: 90px;
+                  font-size: 18px;
+          }
+      
+          footer {
+                  text-align: center;
+          }
+
+           /* Responsive navigation menu (for tablet devices) */
+           @media screen and (max-width: 1000px) {
+               
+                  .nav a, .nav-right {
+                          float: none;
+                          display: block;
+                  }
+                      
+                  .nav-centered a {
+                          position: relative;
+                          transform: none;
+                      }
+
+                .topright4 {
+                  display: none;
+                    }
+
+                .topright3 {
+                    display: none;
+                }
+
+                .topright2 {
+                    display: none;
+                }
+
+
+          }
+
+          @media screen and (max-width: 650px) {
+
+                    h1 {
+                    font-size: 7vw;
+                    position: static;
+                    }
+
+                }
+
+
+
+    </style>
+</head> 
+
+        <body> 
+        
+        <!-- Heading -->
+        
+        
+<section class="header">
+
+        <h1>Dublin Bike Tracker</h1>
+
+        <div container = "topright">
+                <div class="topright2"  id="currentTemp"></div>
+                <div class="topright3"  id="windspeed"></div>
+                <div class="topright4"  id="icon"></div>
+        </div>
+</section>
+
+<!-- Navigation Bar-->
+        <div class="nav">
+        <ul>
+            <li><a href="/map">Home</a></li>
+            <li><a href="/stationTable">Station Information</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        </div>
+
+        
+<!---Div for the map-->
+<section id = "main">
+        <div id = "journeyplanner">
+                <div id ="route_header"><h2>Route Information</h2></div>
+                
+                <!---Div for the user selection-->
+                <div id="dropdown">   
+                        <br>
+                        <div id="choose_start"></div>
+                        <br>
+                        <div id="choose_destination"></div>
+                        <br>
+                        <div id="choose_day"></div>
+                        <br>
+                </div>
+                <div id="button">
+                        <br>
+                        <button onclick="buttonClick(bool)">Show Route</button>
+                        <br>
+                        <button onclick="closestStation()">Show Closest Station</button>
+                        <br>
+                </div>
+
+                <!---Div for the charts-->
+                <div id = "charts">
+                        <br>
+                        <div id = "chartHeader1" style="padding: 12px;"></div>
+                        <br>
+                        <div class="ct-chart ct-golden-section" id="chart1"></div>
+                        <br>
+                        <div id = "chartHeader2" style="padding:12px;"></div>
+                        <br>
+                        <div class="ct-chart ct-golden-section" id="chart2"></div>
+                </div>
+        </div>
+
+        <div id = "map"></div> 
+</section>
+        
+<section id = "model">
+        <h2>Plan your Trip</h2>
+        <div id="choose_start2"></div>
+
+        <p>Choose a date & time: </p><input type="text" name="prediction" value="04/04/2022" />
+        <br>
+        <br>
+    
+        <div id="prediction_section"></div>
+
+        <div id="prediction_section_two"></div>
+
+        <div id="prediction_section_three"></div>
+
+</section>
+
+<br>
+
+<footer>
+        <p>COMP30830 - Software Engineering Project</p>
+        <p><i style="font-size:24px;" class="fa">&#xf206;</i>  Created by Daniel Howes, Mark Kavanagh & Conor Kennedy   <i style="font-size:24px" class="fa">&#xf206;</i></p>
+        <br>
+</footer>
+          
+       
+<script> 
+
+//calendar function
+
+    // getting today's date
+    var today = new Date();
+
+
+      $(function() {
+        $('input[name="prediction"]').daterangepicker({
+          singleDatePicker: true,
+          showDropdowns: true,
+          timePicker: true,
+          startDate: today,
+          minDate: today,
+          locale: {
+          format: 'DD/MM/YYYY' 
+        }
+
+        }, function(start, label) {
+
+          //testing the output
+
+          console.log("Date selected", start._d);
+
+          //CONOR ADDED 3
+
+          //for prediction:
+          console.log("Date selected hours", start._d.getHours());
+
+          var hours_test = (start._d.getHours());
+
+          var days_test = (start._d.getDay());
+
+        //   variable tests
+          console.log("days, test", days_test);
+          console.log("testtest", hours_test);
+          console.log("hours test:", hours_test);
+          console.log("Date selected Day", start._d.getDay());
+          console.log("Date selected", start._i[0]);
+          console.log("Date selected", start);
+
+        //if user selects a time where the stations are not opened a message appears
+
+          if (hours_test > 0 && hours_test < 5) {
+
+            document.getElementById("prediction_section_three").innerHTML = "This is a reminder that the station will be closed at this time. All stations are closed between 00:00 and 05:00.";
+
+          }
+
+          else { document.getElementById("prediction_section_three").innerHTML = ""};
+
+
+
+          predict()
+
+          //for prediction:
+          console.log("Date selected hours", start._d.getHours());
+          console.log("Date selected Day", start._d.getDay());
+          console.log("Date selected", start._i[0]);
+          console.log("Date selected", start);
+
+          
+
+          // the variables to pass through for predictions are here - day and hour 
+
+          // expected forecast for this day is 
+
+          //unix time stamp for the weather 
+          console.log("Unix Time Stamp:", (start._d.getTime())/1000)
+
+          function predict() {
+
+            console.log("testtestwithinfunction", hours_test);
+
+            console.log("testest", days_test);
+
+            console.log("IN FUNCTION", station1);
+
+            fetch("/predict/" + station1 + "/" + days_test + "/" + hours_test).then(response => {
+              return response.json();
+            }).then(predictData => {
+
+                console.log(predictData);
+
+                document.getElementById("prediction_section_two").innerHTML = "Expected Number of Bikes Available at " + station1 + " for this time and date: " + predictData.bikes;
+            })
+
+            }
+          
+        });
+      }); 
+//***
+//GLOBAL VARIABLES
+//***
+
+var map; //map variable
+var infoWindow = null; //popup window variable
+var weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; //array to populate dropdown list
+var hourly = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm',
+              '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']; //new array for labels
+var ts = Math.round((new Date()).getTime() / 1000); //time at loading
+var gMarkers = []; //array to store google maps markers
+var station = JSON.parse('{{ stat | tojson | safe}}'); //variable contataining static data
+var availableBikes = JSON.parse('{{ bikes | tojson | safe}}'); //variable contataining dynamic data at time of loading
+console.log("station info", station);
+var index; //variable to index array when using button to select marker
+var start; //variable for starting station
+var Destination; //variable for destination station
+var directionsService; //Google maps directions variable
+var directionsRenderer; //Google maps directions variable
+var bool; //boolean used turn directions display on/off
+var currentLatitude; //users latitude
+var currentLongitude; //users longitude
+var station1; //used for station name on dropdown for predictions
+
+//set chartDay to the current day if not already set
+if (!chartDay){
+    var chartDay = (new Date(ts*1000)).getDay();
+}
+
+//***
+//FUNCTION TO CREATE MAP WITH STATION MARKERS
+//***
+function initMap() { 
+
+    console.log(availableBikes[59]);
+
+    getLocation();
+
+    //initialise variables for directions function
+    bool = true; 
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({
+        polylineOptions: {
+              strokeColor: "red"
+        }
+    });
+
+    //google map variable displayed in map div
+    map = new google.maps.Map(document.getElementById('map'), { 
+        center: {lat: 53.3498, lng: -6.2603}, 
+        zoom: 13 
+    });
+
+    directionsRenderer.setMap(map); //use current map to show directions
+    
+    //for each station 
+    for (let s = 0; s < station.length; s++) { 
+
+        //each marker labeled as the number of bikes currently available
+        var color; 
+
+        //marker color dependent on how many bikes available, 0-9 bikes = red, between 10-19 bikes = yellow, over 20 = green
+        if (availableBikes[s][1] >= 0 && availableBikes[s][1] < 10){
+            color = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+        } else if (availableBikes[s][1] >= 10 && parseInt(availableBikes[s][1]) < 20) {
+            color = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+        } else {
+            color = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+        }
+
+        //create a google maps marker using the latitude and longitude for each station
+        var marker = new google.maps.Marker({
+            position: {lat: parseFloat(station[s][5]), lng: parseFloat(station[s][6])},
+            map,
+            title: station[s][0],
+            icon: { url: color, scaledSize: new google.maps.Size(40, 40)} //colored markers
+        });
+  
+        //push marker to the array
+        gMarkers.push(marker);
+   
+//***
+//FUNCTION FOR WHEN A MARKER IS CLICKED, WHICH WILL QUERY THE 'BIKES' TABLE AND OPEN A POPUP WINDOW
+//***
+        marker.addListener('click', () => {
+
+            var stat = station[s][0]; //station name
+
+            //zoom in and re-centre map around selected station 
+            map.setZoom(15);
+            map.panTo(gMarkers[s].getPosition());
+
+            //set the selected value of the dropdown to the clicked station
+            setStart(s);
+
+            //if a popup is open, close it
+            if (infoWindow) {
+                infoWindow.close();
+            }
+    
+            //create a new popup window
+            infoWindow = new google.maps.InfoWindow();
+        
+            //replace '/' in station address for 'Princes Street / O'Connell Street' so the URL works
+            var statName = station[s][0].replace('/', '!')
+
+
+//***
+//QUERY 'BIKES' TABLE AND RETURN ALL ROWS FOR SELECTED STATION
+//***
+            fetch("/bikes/" + statName).then(Response => {
+                return Response.json();
+            //each row returned returned is 'bikeData' variable
+            }).then(bikeData => {
+
+                //open the pop up window for the selected marker
+                infoWindow.open({
+                    anchor: gMarkers[s],
+                    map,
+                    shouldFocus: false,
+                });
+
+                var now = Math.round((new Date()).getTime() / 1000); //time at clicking station
+                var unix_timestamp = bikeData[0][3]; //station updated timestamp
+                var difference = now - unix_timestamp; //time elapsed since updated
+                var minutes_ago = Math.round(((difference / 60))); 
+                var new_date = new Date(minutes_ago * 1000); //convert time elapsed to date
+
+
+                // Create a new JavaScript Date object based on the timestamp
+                // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+                var date = new Date(unix_timestamp * 1000);
+
+                // Hours part from the timestamp
+                var hours = date.getHours();
+                // Minutes part from the timestamp
+                var minutes = "0" + date.getMinutes();
+                // Seconds part from the timestamp
+                var seconds = "0" + date.getSeconds();
+
+
+                //set the information in the popup window to the most recent data from the query results 
+                infoWindow.setContent('<div><h2>' + bikeData[0][0] + '</div></h2>' + 
+                '<div><h3> Available Bikes: ' + bikeData[0][1] + '</div></h3>' + 
+                '<div><h3> Available Stands: ' + bikeData[0][2] + '</div></h3>' + 
+                '<div><h3> Last Updated: ' + minutes_ago + ' minutes ago</div></h3>' +
+                '<div><h3> Status: ' + bikeData[0][4] + '</div></h3>'
+                );
+
+                //initialise objects for bike data to be used in for graphs
+                var dailyBikes = {};
+                var hourlyBikes = {};
+
+                //initialise arrays to get averages for each day and each hour
+                var averageDailyBikes = [];
+                var averageHourlyBikes = [];
+
+                var numRows = Object.keys(bikeData).length; //check amount of rows for that station
+                
+                //add an array, using each weekday as a key in the dailyBikes object
+                for (let i = 0; i < weekDays.length; i++) {
+                    dailyBikes[weekDays[i]] = [];
+                }
+
+                //add an array, using each hour as a key in the hourlyBikes object
+                for (let h = 0; h <= 23; h++) {
+                    hourlyBikes[h] = [];
+                }
+
+                //for each row returned, get the updated time, the day of the update and hour of the update
+                bikeData.forEach(bikeTime => {
+                    var bikeDate = new Date(bikeTime[3] * 1000); // time of update
+                    var day = bikeDate.getDay(); // day of update
+                    var hour = bikeDate.getHours(); // hour of update
+
+                    //add the number of bikes to the dailybikes object, depending on the day of update
+                    dailyBikes[weekDays[day]].push(bikeTime[1]); 
+
+                    //check if the day of the update is the same as the day selected in the dropdown box
+                    //and push the number of bikes at this time to the hourlyBikes object depending on the hour of update
+                    if (day == chartDay){
+                        hourlyBikes[hour].push(bikeTime[1]);
+                    }
+                });
+        
+                //calculate the average number of bikes for each day of the week
+                for (let x = 0; x < weekDays.length; x++) {
+                    var sum = dailyBikes[weekDays[x]].reduce((accumulator, curr) => parseInt(accumulator) + parseInt(curr));
+                    var len = dailyBikes[weekDays[x]].length;
+                    averageDailyBikes.push(sum/len);
+                }
+        
+                //calculate the average number of bikes for each hour of the day selected by the dropdown
+                for (let y = 0; y <= 23; y++) {
+                    var sum1 = hourlyBikes[y].reduce((accumulator, curr) => parseInt(accumulator) + parseInt(curr));
+                    var len1 = hourlyBikes[y].length;
+                    averageHourlyBikes.push(Math.round(sum1/len1));
+                }
+
+//***
+//CREATE CHARTS FOR AVERAGE DATA
+//***
+                //create a bar chart of average bikes available per day
+                new Chartist.Bar('#chart1', {
+                    labels: weekDays,
+                        series: [ averageDailyBikes ]
+                    }, 
+                    // { width: 520, height: 240
+                    );
+        
+                //create a line chart of average bikes available per hour, per day selected
+                new Chartist.Line('#chart2', {
+                    labels: hourly,
+                    series: [ averageHourlyBikes ]
+                    },
+                    { //width: 520, height: 240, 
+                        low: 0, showArea: true
+                    });
+
+                document.getElementById("chartHeader1").innerHTML = 'Average Bikes Available Per Day';
+                document.getElementById("chartHeader2").innerHTML = 'Average Bikes Available Per Hour';
+            });
+        });
+    }
+
+    startDropDown();
+    destinationDropDown();
+}
+
+console.log("stationcheck", station);
+//dropdown for predictions
+startDropDown2();
+
+function startDropDown2() {
+  //HTML for dropdown menu
+  var station_choice = "<label for='station_option1'>Select Station: </label>"
+    + "<select name='station_option1' id='station_option1' onchange='SelectedValue(this)'>"
+    + "<option value='' disabled selected> ----------------------------------------------- </option><br>";
+
+    //populate dropdown with station names
+    for (let m = 0; m < station.length; m++){
+        station_choice += "<option value=" + m + ">" + station[m][0] + "</option><br>";
+    };
+
+    station_choice += "</select>";
+
+    document.getElementById("choose_start2").innerHTML = station_choice;
+
+}
+//getting selected value from dropdown stored in variable station1
+function SelectedValue(m) {
+
+    console.log(gMarkers[0].getTitle())
+
+    station1 = gMarkers[m.value].getTitle();
+
+    console.log("new test name", station1);
+}
+
+//***
+//FUNCTION TO CREATE DROPDOWN TO SELECT START STATION
+//***
+function startDropDown() {
+
+    //HTML for dropdown menu, implement 'setStart(marker number)' function on change
+    var station_choice = "<label for='station_option'>Starting Location: </label>"
+    + "<select name='station_option' id='station_option' onchange='setStart(this)'>"
+    + "<option value='' disabled selected> ----------------------------------------------- </option><br>";
+
+    //populate dropdown with station names
+    for (let m = 0; m < station.length; m++){
+        station_choice += "<option value=" + m + ">" + gMarkers[m].getTitle() + "</option><br>";
+    };
+
+    station_choice += "</select>";
+
+    document.getElementById("choose_start").innerHTML = station_choice;
+}
+
+//***
+//FUNCTION TO CREATE DROPDOWN TO SELECT DESTINATION STATION
+//***
+function destinationDropDown() {
+
+    //HTML for dropdown menu, implement 'setDestination(marker number)' function on change
+    var station_choice = "<label for='destination_option'>Destination: </label>"
+    + "<select name='destination_option' id='destination_option' onchange='setDestination(this)'>"
+    + "<option value='' disabled selected> ----------------------------------------------- </option><br>";
+
+    //populate dropdown with station names
+    for (let m = 0; m < station.length; m++){
+        station_choice += "<option value=" + m + ">" + gMarkers[m].getTitle() + "</option><br>";
+    };
+
+    station_choice += "</select>";
+
+    document.getElementById("choose_destination").innerHTML = station_choice;
+}
+
+//***
+//FUNCTION TO CREATE DROPDOWN WITH A LIST OF DAYS
+//***
+function DailyDropDown() {
+    
+    //HTML for dropdown menu, implement 'setDays(weekday number)' function on change
+    var day_choice = "<label for='day_option'>Choose a day: </label>"
+    + "<select name='day_option' id='day_option' onchange='setDays(this)'>"
+    + "<option value='' disabled selected> ----------------------------------------------- </option><br>";
+      
+    //populate dropdown with weekdays   
+    for (let w = 0; w < weekDays.length; w++){
+        day_choice += "<option value=" + w + ">" + weekDays[w] + "</option><br>";
+    };
+
+    day_choice += "</select>";
+
+    document.getElementById("choose_day").innerHTML = day_choice;
+}
+
+
+//***
+//FUNCTION TO SELECT THE VALUE OF THE STARTING STATION DROPDOWN, THAT TAKES INPUT FROM THE CLICKED MARKER OR
+//FROM THE STATION DROPDOWN SELECTION
+//***
+function setStart(ele1){
+
+    var n;
+
+    //check input type is a number type
+    if (typeof(ele1) != "number"){
+        n = ele1.value;
+    }else {
+        n = ele1;
+    }
+
+    //assign input as selected value for starting station dropdown menu
+    document.getElementById('station_option').value = n;
+
+    //set index for start station marker to be selected using buttonClick()
+    index = n;
+    start = gMarkers[index];
+    //google.maps.event.trigger(gMarkers[index], 'click'); //access marker by indexing markers array
+}
+
+//***
+//FUNCTION TO SELECT THE VALUE OF THE DESTINATION STATION DROPDOWN, THAT TAKES INPUT FROM 
+//THE STATION DROPDOWN SELECTION
+//***
+function setDestination(ele1){
+
+var n;
+
+//check input type is a number type
+if (typeof(ele1) != "number"){
+    n = ele1.value;
+}else {
+    n = ele1;
+}
+
+//assign input as selected value for destination dropdown menu
+document.getElementById('destination_option').value = n;
+
+//set index for destination station marker to be selected using buttonClick()
+destination = gMarkers[n];
+}
+
+//***
+//FUNCTION TO SELECT THE VALUE OF THE DAILY DROPDOWN, THAT TAKES INPUT AS THE CURRENT DAY
+//OR FROM THE DAILY DROPDOWN SELECTION
+//***
+function setDays(ele2){
+  
+    var n;
+
+    //check input type is a number type
+    if (typeof(ele2) != "number"){
+        n = ele2.value;
+    }else {
+        n = ele2;
+    }
+    //assign input as selected value for daily dropdown menu
+    document.getElementById('day_option').value = n;
+
+    //change selected day for the charts as the input
+    chartDay = n;
+}
+
+//***
+//FUNCTION TO SHOW DIRECTIONS BETWEEN TWO STATIONS BASED ON STATION DROPDOWN SELECTION, THAT TAKES A BOOLEAN
+//AS AN ARGUMENT
+//***
+function buttonClick(toggle){
+
+    //check if toggle is true, send a Google Maps Directions API request based on the geolocation of two markers 
+    //selected using the dropdown menus
+    if (toggle) {
+        var request = {
+            origin: new google.maps.LatLng(start.getPosition().lat(), start.getPosition().lng()),
+            destination: new google.maps.LatLng(destination.getPosition().lat(), destination.getPosition().lng()),
+            travelMode: 'BICYCLING'
+        };
+
+        //send request and if successful, show the results on the map, iterate through each marker 
+        //and turn off their display
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                directionsRenderer.setMap(map);
+                directionsRenderer.setDirections(result);
+                for (var i = 0; i < gMarkers.length; i++){
+                    gMarkers[i].setMap(null);
+                }
+                //change value of the toggle to false
+                bool = !bool;
+            } else {
+                  console.log('directions error')
+            }
+        });
+    //If toggle is false, turn the directions display off and iterate through each marker and display on the map
+    } else {
+            directionsRenderer.setMap(null);
+            for (var i = 0; i < gMarkers.length; i++){
+                gMarkers[i].setMap(map);
+            }
+            //turn the toggle to true
+            bool = !bool;
+    }
+
+}
+
+//***
+//FUNCTION TO SHOW USERS LOCATION WHEN PAGE LOADS
+//***
+function showLocation(position) {
+
+    //Random location in Dublin City Centre, change to commented out values for accurate location
+    currentLatitude = 53.344 //position.coords.latitude;
+    currentLongitude = -6.276355 //position.coords.longitude;
+    
+    //zoom in and centre map around user location
+    map.setZoom(12);
+    map.panTo({lat:currentLatitude, lng:currentLongitude});
+
+    // Create a new marker that shows the user location as a blue circle
+    var currentPos = new google.maps.Marker({
+            position: {lat:currentLatitude, lng:currentLongitude},
+            map: map,
+            icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    fillColor: '#5384ED',
+                    strokeColor: '#ffffff',
+            }
+        });
+    // Circle around user marker of 500m
+    var currentArea = new google.maps.Circle({
+            strokeColor: "#86c5da",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#86c5da",
+            fillOpacity: 0.35,
+            map,
+            center: {lat:currentLatitude, lng:currentLongitude},
+            radius: 500,
+    });
+  }
+
+// Function for when getLocation() function fails
+function errorHandler(err) {
+    if(err.code == 1) {
+        console.log("Error: Access is denied!");
+        alert("Error: Location Services permission is denied!");
+    }
+    else if( err.code == 2) {
+        console.log("Error: Location Services are unavailable!");
+        alert("Error: Location Services are unavailable!");
+    }
+}
+
+//***
+//FUNCTION TO GET USERS LOCATION WHEN PAGE LOADS
+//***
+function getLocation(){
+    if(navigator.geolocation){
+        // timeout at 60000 milliseconds (60 seconds)
+        var options = {timeout:60000};
+        navigator.geolocation.getCurrentPosition(showLocation, showLocation, options);
+    } else{
+        alert("Sorry, browser does not support geolocation!");
+    }
+}
+
+function closestStation(){
+
+    var R = 6371.0710; // Radius of the Earth in km
+    var closest = gMarkers[0]; //initialise first station as closest to compare other stations
+
+    var rlat1 = gMarkers[0].getPosition().lat() * (Math.PI/180); // Convert degrees to radians
+    var rlat2 = currentLatitude * (Math.PI/180); // Convert degrees to radians
+    var difflat = rlat2-rlat1; // Radian difference (latitudes)
+
+    var difflon = (gMarkers[0].getPosition().lng() - currentLongitude) * (Math.PI/180); // Radian difference (longitudes)
+
+    //distance between current location and first station
+    var distance1 = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+
+    //get the distance between each station and current location
+    for (let c = 1; c < gMarkers.length; c++){
+        rlat1 = gMarkers[c].getPosition().lat() * (Math.PI/180); // Convert degrees to radians
+        rlat2 = currentLatitude * (Math.PI/180); // Convert degrees to radians
+        difflat = rlat2-rlat1; // Radian difference (latitudes)
+
+        difflon = (gMarkers[c].getPosition().lng() - currentLongitude) * (Math.PI/180); // Radian difference (longitudes)
+
+        //distance of current location and current station
+        var distance2 = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+
+        //if the distance of the current station is less than the distance of the first station
+        //current station is the closest
+        if (distance2 < distance1){
+            distance1 = distance2;
+            closest = gMarkers[c];
+        }
+    }
+
+    google.maps.event.trigger(closest, 'click'); //click marker of closest station
+
+}
+
+</script> 
+
+<!--Map API that also calls the initMap function-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzItvv4SONxxcQLsy7nEIt_djn54y8jjk&callback=initMap" 
+async defer>  </script>
+<script>    
+
+
+//***
+//CALL FUNCTIONS
+//***
+DailyDropDown();
+setDays(chartDay);
+
+//function for the weather information for the top right of the page
+getWeatherInfo();
+
+function getWeatherInfo(){
+    //call weather API from openweathermap
+    var weatherdata;
+    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=5f67f6a5a5d8e18998975ca3111e4dc7&units=metric',function(data){
+        var weather_description = data.weather[0].description;
+        var temperature = data.main.temp;
+        var wind_speed=data.wind.speed;
+        var icon = data.weather[0].icon;
+        var iconUrl = ("<img src='http://openweathermap.org/img/w/" + icon + ".png'>");
+        
+        
+        $("#currentWeather").html(weather_description);
+        $("#currentTemp").html("Temperature: " + temperature + " °C");
+        $("#windspeed").html("Wind Speed: " + wind_speed + " m/s");
+        $("#icon").html(iconUrl);
+    
+    })
+}
+
+
+</script>
+
+    </body> 
+</html>
+  
