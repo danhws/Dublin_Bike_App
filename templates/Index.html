@@ -990,7 +990,8 @@ function closestStation(){
 </script> 
 
 <!--Map API that also calls the initMap function-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzItvv4SONxxcQLsy7nEIt_djn54y8jjk&callback=initMap" 
+<!-- Configure src URL with personal Google Maps API Key -->
+<script src="https://maps.googleapis.com/maps/api/js?key=" 
 async defer>  </script>
 <script>    
 
@@ -1007,7 +1008,8 @@ getWeatherInfo();
 function getWeatherInfo(){
     //call weather API from openweathermap
     var weatherdata;
-    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=5f67f6a5a5d8e18998975ca3111e4dc7&units=metric',function(data){
+    // add openweathermap API key to URL
+    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672',function(data){
         var weather_description = data.weather[0].description;
         var temperature = data.main.temp;
         var wind_speed=data.wind.speed;

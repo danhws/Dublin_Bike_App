@@ -34,11 +34,12 @@ def index2():
 @app.route("/stations2")
 def stations():
     #Connect to dBikes database.   'mycursor' used to execute database commands.
+    # configure personal database details
     mydb = mysql.connector.connect(
-    host="dbbikes.cpwzqhmscagf.eu-west-1.rds.amazonaws.com",
-    user="group20",
-    password="30830Group20",
-    database="dBikes")
+    host="localhost",
+    user="root",
+    password="",
+    database="dublinBikes")
 
     mycursor = mydb.cursor()    
     mycursor.execute("SELECT DISTINCT * FROM Bikes INNER JOIN (SELECT DISTINCT(Address), MAX(Updated) AS Maxscore FROM Bikes GROUP BY Address) topscore ON Bikes.Address = topscore.Address AND Bikes.Updated = topscore.maxscore ORDER BY Bikes.Address ASC")
@@ -51,11 +52,12 @@ def stations():
 @app.route("/stations")
 def station():
     #Connect to dBikes database.   'mycursor' used to execute database commands.
+    # configure personal database details
     mydb = mysql.connector.connect(
-    host="dbbikes.cpwzqhmscagf.eu-west-1.rds.amazonaws.com",
-    user="group20",
-    password="30830Group20",
-    database="dBikes")
+    host="localhost",
+    user="root",
+    password="",
+    database="dublinBikes")
 
     mycursor = mydb.cursor()    
     mycursor.execute("SELECT * FROM Station ORDER BY Address ASC")
@@ -67,11 +69,12 @@ def station():
 @app.route("/bikes/<stationName>")
 def bikes(stationName):
     #Connect to dBikes database.   'mycursor' used to execute database commands.
+    # configure personal database details
     mydb = mysql.connector.connect(
-    host="dbbikes.cpwzqhmscagf.eu-west-1.rds.amazonaws.com",
-    user="group20",
-    password="30830Group20",
-    database="dBikes")
+    host="localhost",
+    user="root",
+    password="",
+    database="dublinBikes")
 
     query = """SELECT * FROM Bikes WHERE Address = %s ORDER BY Updated DESC"""
 
@@ -113,4 +116,4 @@ def predict(station1, days_test, hours_test):
         return result
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=true)
+    app.run(debug=true)

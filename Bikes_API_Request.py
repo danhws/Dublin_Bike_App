@@ -10,16 +10,17 @@ import pandas as pd
 import mysql.connector
 
 #API details including key and URI.
-API = '2e9610b5e4e6707b43826d0aeba532d4b4c30e87'
+API = '' # enter personal API key here
 Name = 'Dublin'
 URI = 'https://api.jcdecaux.com/vls/v1/stations'
 
-#Connect to dBikes database.   'mycursor' used to execute database commands.
+#Connect to dublinBikes database.   'mycursor' used to execute database commands.
+# configure personal database details
 mydb = mysql.connector.connect(
-  host="dbbikes.cpwzqhmscagf.eu-west-1.rds.amazonaws.com",
-  user="group20",
-  password="30830Group20",
-  database="dBikes"
+  host="localhost",
+  user="root",
+  password="",
+  database="dublinBikes"
 )
 mycursor = mydb.cursor()
 
