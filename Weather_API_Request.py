@@ -9,19 +9,20 @@ from pprint import pprint
 import pandas as pd
 import mysql.connector
 
-#API details including key, URI, Latitude and Longitude for Dublin.   Celcius variable used to convert results to degrees celcius
-API = '7c6a9517ebcc29b881e9240866300f38'
+#API details including key, URI, Latitude and Longitude for Dublin. Celcius variable used to convert results to degrees celcius
+API = ''# enter personal API key here
 Lat = '53.344'
 Lon = '-6.2672'
 URI = 'https://api.openweathermap.org/data/2.5/forecast' 
 Celcius = 'metric'
 
-#Connect to dBikes database.   'mycursor' used to execute database commands.
+#Connect to dBikes database. 'mycursor' used to execute database commands.
+# configure personal database details
 mydb = mysql.connector.connect(
-  host="dbbikes.cpwzqhmscagf.eu-west-1.rds.amazonaws.com",
-  user="group20",
-  password="30830Group20",
-  database="dBikes"
+  host="localhost",
+  user="root",
+  password="",
+  database="dublinBikes"
 )
 mycursor = mydb.cursor()
 
