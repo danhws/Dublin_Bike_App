@@ -10,8 +10,6 @@ Upon loading the map, markers are designated a color based on the number of avai
 
 ## Data 
 
-Raw data is scraped from both the JCDecaux API and the OpenWeatherMaps API in order to get both station and weather information respectively. This was done by running Bikes_API_Request.py and Weather_API_Request.py files using an Amazon EC2 instance. 
-
 Bike station data is routinely [scraped](Bikes_API_Request.py) from the JCDecaux API with the data being sorted into dynamic and static. After being sorted, this data is stored in a relational database on Amazon RDS which consists of three tables, Station, Bikes and Weather.   
 
 Weather data was [scraped](Weather_API_Request.py) from the OpenWeatherMaps API and inserted into the Weather table. This data was originally going to be implemented in the machine learning algorithm, however this feature was later discarded and so the data in this table is not used. Using Javascript, the weather data displayed on the web page is the result of a direct request to the OpenWeatherMap API.
