@@ -8,7 +8,7 @@ Clicking a station marker will query the database for the most recent data for t
 
 Upon loading the map, markers are designated a color based on the number of available bikes at that station. 
 
-Details on the full application architecture can be found [here](dublinBikesApp_ProjectReport.pdf)
+Details on the full application architecture can be found [here](dublinBikesApp_ProjectReport.pdf).
 
 ## Data 
 
