@@ -272,7 +272,7 @@ getWeatherInfo();
 function getWeatherInfo(){
     //call weather API from openweathermap
     var weatherdata;
-    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=5f67f6a5a5d8e18998975ca3111e4dc7&units=metric',function(data){
+    $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=',function(data){
         var weather_description = data.weather[0].description;
         var temperature = data.main.temp;
         var wind_speed=data.wind.speed;

@@ -39,7 +39,7 @@ def stations():
     host="localhost",
     user="root",
     password="",
-    database="dublinBikes")
+    database="dBikes")
 
     mycursor = mydb.cursor()    
     mycursor.execute("SELECT DISTINCT * FROM Bikes INNER JOIN (SELECT DISTINCT(Address), MAX(Updated) AS Maxscore FROM Bikes GROUP BY Address) topscore ON Bikes.Address = topscore.Address AND Bikes.Updated = topscore.maxscore ORDER BY Bikes.Address ASC")
@@ -57,7 +57,7 @@ def station():
     host="localhost",
     user="root",
     password="",
-    database="dublinBikes")
+    database="dBikes")
 
     mycursor = mydb.cursor()    
     mycursor.execute("SELECT * FROM Station ORDER BY Address ASC")
@@ -74,7 +74,7 @@ def bikes(stationName):
     host="localhost",
     user="root",
     password="",
-    database="dublinBikes")
+    database="dBikes")
 
     query = """SELECT * FROM Bikes WHERE Address = %s ORDER BY Updated DESC"""
 
