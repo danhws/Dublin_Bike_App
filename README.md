@@ -18,6 +18,8 @@ Weather data was [scraped](Weather_API_Request.py) from the OpenWeatherMaps API 
 
 Queries are sent to both tables using the Python Flask application, which also reformats the results into JSON and passes this data to the Javascript within the HTML documents.
 
+![homePage](homePage2.png)
+
 ## Prediction Modelling
 
 In order to estimate future bike availability, the historical station data from the database was used to train machine-learning models. Models assessed were the Linear Regression Model and Random Forest Regressor by comparing their Mean Absolute Error and Root Mean Squared Error. The Random Forest Regressor performed better on both metrics and hence was the model chosen. 
