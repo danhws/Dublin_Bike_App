@@ -10,6 +10,8 @@ Upon loading the map, markers are designated a color based on the number of avai
 
 Details on the full application architecture can be found [here](dublinBikesApp_ProjectReport.pdf).
 
+![architecture](App_Architecture.png)
+
 ## Data 
 
 Bike station data is routinely [scraped](Bikes_API_Request.py) from the JCDecaux API with the data being sorted into dynamic and static. After being sorted, this data is stored in a relational database on Amazon RDS which consists of three tables, Station, Bikes and Weather.   
